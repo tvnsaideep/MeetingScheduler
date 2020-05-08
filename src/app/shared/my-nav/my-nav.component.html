@@ -1,0 +1,23 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-light navbar-laravel" style="background-color: #e3f2fd">
+    <div class="container">
+      <a class="navbar-brand" href="#">Meeting Scheduler</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+  
+          <li class="nav-item">
+            <a class="nav-link active disabled">{{receiverName ? receiverName : 'User'}}</a>
+          </li>
+  
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">Sign Out</a>
+          </li>
+        </ul>
+  
+      </div>
+    </div>
+  </nav>

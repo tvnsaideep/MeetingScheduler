@@ -1,0 +1,259 @@
+<!--Shared Nav bar-->
+<my-nav></my-nav>
+
+<!--Modals-->
+<ng-template #modalContent let-close="close">
+    <div class="modal-header">
+      <h5 class="modal-title">Details of Meeting</h5>
+      <button type="button" class="close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
+
+            <div class="card" id="subjectCard">
+                <div class="card-body">
+                  <h5 class="card-title">Subject</h5>
+                  <p class="card-text" *ngIf="subject">{{subject}} </p>                                
+                  <p *ngIf="!subject" class="alert alert-danger">** Subject is required</p>
+    
+                </div>
+            </div>
+
+            <div class="card" id="whoCard">
+                <div class="card-body">
+                  <h5 class="card-title">Participant</h5>
+                  <p class="card-text" *ngIf="selectedUser">{{selectedUser.firstName}} {{selectedUser.lastName}}</p>                                
+                  <p *ngIf="!selectedUser" class="alert alert-danger">** User is required</p>
+
+                </div>
+            </div>
+
+            <div class="card" id="whenCard">
+                <div class="card-body">
+                  <h5 class="card-title">Date & Time</h5>
+                  <p class="card-text" *ngIf="startDate1 && endDate1">{{startDate1 | date: 'medium'}} - {{endDate1 | date: 'medium' }}</p>                                
+
+                  <p *ngIf="!startDate1" class="alert alert-danger">** Start Date/Time is required</p>
+                  <p *ngIf="!endDate1" class="alert alert-danger">** End Date/Time is required</p>
+
+                </div>
+            </div>
+
+
+            <div class="card" id="whereCard">
+                <div class="card-body">
+                  <h5 class="card-title">Location</h5>
+                  <p class="card-text" *ngIf="venue">{{venue}}</p>                                
+                  <p *ngIf="!venue" class="alert alert-danger">** Venue is required</p>
+
+                </div>
+            </div>
+
+          </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+        <button id="btn-finalize" type="button" class="btn btn-success rounded" (click)="createMeetingFunction();close()">
+            Finalize Meeting</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="close()">Back</button>
+    
+    </div>
+
+  </ng-template>
+
+<main class="login-form">
+    <div class="container">
+
+        <form #createForm="ngForm" (ngSubmit)="viewScheduledMeetingFunction()">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="background-color : lightyellow">
+                        <h5>Create Meeting</h5>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <label for="subject" class="col-md-4 col-form-label text-md-right">Subject</label>
+                            <div class="col-md-6">
+
+                                <input type="text" 
+                                        #topic="ngModel" 
+                                        id="subject" 
+                                        name="subject" 
+                                        [(ngModel)]="subject"
+                                        class="form-control" 
+                                        required
+                                         autofocus
+                                >
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="description" class="col-md-4 col-form-label text-md-right">Meeting
+                                Purpose</label>
+                            <div class="col-md-6">
+                                <textarea type="text" 
+                                         #agenda="ngModel" 
+                                         id="description" 
+                                         name="description"
+                                        [(ngModel)]="description" 
+                                        class="form-control">
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">Place</label>
+                            <div class="col-md-6">
+                                <input type="text" 
+                                       #location="ngModel" 
+                                       pattern="^[A-Z][A-za-z ]+$" 
+                                       id="inputVenue"
+                                        name="venue" 
+                                        [(ngModel)]="venue" 
+                                        class="form-control" 
+                                        placeholder="Venue" 
+                                        required
+                                >
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="background-color : lightslategray">
+                        <h5>Schedule Meeting</h5>
+                    </div>
+                    <div class="card-body">
+
+
+                        <div class="form-group row">
+                            <label for="startDate1" class="col-md-4 col-form-label text-md-right">Start Time</label>
+                            <div class="col-md-6">
+                                <input [owlDateTime]="dt1" 
+                                        name="startDate1" 
+                                        [(ngModel)]="startDate1"
+                                        placeholder="Start Date Time">
+
+                                <span [owlDateTimeTrigger]="dt1">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                <owl-date-time #dt1></owl-date-time>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="endDate1" class="col-md-4 col-form-label text-md-right">End Time</label>
+                            <div class="col-md-6">
+                                <input [owlDateTime]="dt2" 
+                                        name="endDate1" 
+                                        [(ngModel)]="endDate1"
+                                        placeholder="End Date Time"
+                                >
+
+                                <span [owlDateTimeTrigger]="dt2">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                <owl-date-time #dt2></owl-date-time>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-6">
+                                <div *ngIf="validateDate(startDate1,endDate1)" class="alert alert-danger">
+                                    * End Date/Time cannot be before Start Date/Time.
+                                </div>
+
+                                <div *ngIf="validateCurrentDate(startDate1) || validateCurrentDate(endDate1)"
+                                    class="alert alert-danger">
+                                    * Is the Date Correct? We can't shedule a meeting back in date.
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row justify-content-center">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="background-color : orange;">
+                        <h5>Users</h5>
+                    </div>
+                    <div class="card-body">
+             
+                        <div class="form-group row">
+                            <label for="endDate1" class="col-md-4 col-form-label text-md-right">Selected User</label>
+                            <div class="col-md-6">
+                                <div *ngIf="selectedUser" class="alert alert-success">
+                                    {{selectedUser.firstName}} {{selectedUser.lastName}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <label for="userName" class="col-md-4 col-form-label text-md-right">Search for User</label>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                  <input type="text" id="inputUserName" name="userName" [(ngModel)]="userName" class="form-control"
+                                    placeholder="Search For User Name">
+                                  <br>
+                                  <div class="people-list">
+                                    <div class="card my-card" id="card-design" *ngFor="let user of usersData | filter:userName">
+                  
+                                      <div class="card-body p-2" (click)="getSelected(user)" *ngIf="user.userId != receiverId">
+                                        <span class="d-block font-adjust-heading">{{user.firstName}} {{user.lastName}}</span>
+                                        <span class="d-block font-adjust-heading">{{user.email}}</span>
+                                        <span class="d-block font-adjust-heading" *ngIf="user.isAdmin=='true'">Admin <i class="fas fa-user-plus"></i></span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                  
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-primary" [disabled]="!createForm.form.valid">
+                                  Let's Create
+                                </button>
+                          
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+            
+           
+        </div>
+       </form>
+        
+    </div>
+
+</main>

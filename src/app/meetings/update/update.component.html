@@ -1,0 +1,129 @@
+<!--Shared Nav Bar-->
+<my-nav></my-nav>
+<br>
+
+<!--Container form for updating meeting-->
+<div class="container">
+
+    <form #createForm="ngForm" (ngSubmit)="updateMeetingFunction()">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="background-color : orange">
+                        <h5>Create Meeting</h5>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="form-group row">
+                            <label for="subject" class="col-md-4 col-form-label text-md-right">Subject</label>
+                            <div class="col-md-6">
+                                <input type="text" #topic="ngModel" id="subject" name="subject" [(ngModel)]="subject"
+                                    class="form-control" required autofocus>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="description" class="col-md-4 col-form-label text-md-right">Meeting
+                                Agenda</label>
+                            <div class="col-md-6">
+                                <textarea type="text" #agenda="ngModel" id="description" name="description"
+                                    [(ngModel)]="description" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right">Venue</label>
+                            <div class="col-md-6">
+                                <input type="text" #location="ngModel" pattern="^[A-Z][A-za-z ]+$" id="inputVenue"
+                                    name="venue" [(ngModel)]="venue" class="form-control" placeholder="Venue" required>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="background-color: blanchedalmond;">
+                        <h4> Participant </h4>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{selectedUser}} </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header" style="background-color : rgb(118, 211, 235)">
+                        <h5>Schedule Meeting</h5>
+                    </div>
+                    <div class="card-body">
+
+
+                        <div class="form-group row">
+                            <label for="startDate1" class="col-md-4 col-form-label text-md-right">Start Time</label>
+                            <div class="col-md-6">
+                                <input [owlDateTime]="dt1" name="startDate1" [(ngModel)]="startDate1"
+                                    placeholder="Start Date Time">
+                                <span [owlDateTimeTrigger]="dt1">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                <owl-date-time #dt1></owl-date-time>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="endDate1" class="col-md-4 col-form-label text-md-right">End Time</label>
+                            <div class="col-md-6">
+                                <input [owlDateTime]="dt2" name="endDate1" [(ngModel)]="endDate1"
+                                    placeholder="End Date Time">
+
+                                <span [owlDateTimeTrigger]="dt2">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                                <owl-date-time #dt2></owl-date-time>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-6">
+                                <div *ngIf="validateDate(startDate1,endDate1)" class="alert alert-danger">
+                                    * End Date/Time cannot be before Start Date/Time.
+                                </div>
+
+                                <div *ngIf="validateCurrentDate(startDate1) || validateCurrentDate(endDate1)"
+                                    class="alert alert-danger">
+                                    * How one can Schedule a meeting in back date?
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-success">Reschedule Meeting</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="btn btn-danger" (click)="goToAdminDashboard()">Back to Dashboard</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+    </form>
+</div>
