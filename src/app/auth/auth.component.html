@@ -1,0 +1,258 @@
+<!--Login & Sign up Forms included using data-toggle-->
+<!--Author: Saideep-->
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left col-sm-1">
+            <!--calendar iCON-->
+            <i class="fa fa-calendar fa-lg cal" aria-hidden="true"></i>
+            <h3>Welcome</h3>
+            <p>Schedule your meetings in most easiset way!!</p>
+            <input type="button" name="" value="Scheduler"/><br/>
+        </div>
+        <div class="col-md-9 register-right">
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <!--toggle to login div-->
+                    <a class="nav-link active" id="logintab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
+                </li>
+                <li class="nav-item">
+                    <!--toggle to signup div-->
+                    <a class="nav-link" id="signuptab" data-toggle="tab" href="#signup" role="tab" aria-controls="signup" aria-selected="false">Signup</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="logintab">
+                    <h3 class="register-heading">Sign into shedule your Meetings </h3>
+                    <div class="row register-form">
+                        <div class="col-md-12 form-group">
+                            <form #loginForm="ngForm" (ngSubmit)="verifyLogin()">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label >Mail ID:</label>
+                                            </div>
+                                                <div class="col-md-6">
+                                                    <input 
+                                                        type="text" 
+                                                        name="loginMail" 
+                                                        [(ngModel)]="loginMail" 
+                                                        class="form-control" 
+                                                        placeholder="Email *" 
+                                                        required
+                                                        autofocus
+                                                     />
+                                                </div>      
+                                        </div>                                    
+                                    </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label >Password:</label>
+                                        </div>
+                                            <div class="col-md-6">
+                                                <input 
+                                                        type="password" 
+                                                        name="loginPwd" 
+                                                        [(ngModel)]="loginPwd" 
+                                                        class="form-control" 
+                                                        placeholder="Password *"
+                                                        (keydown)="loginUsingKeypress($event)"
+                                                         required
+                                                 />
+                                            </div>      
+                                    </div>  
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button class="btn btn-primary loginbtn" type="submit" value="Login" [disabled]="!loginForm.form.valid">Sign In</button>
+                                           
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a [routerLink]="['/user/forgot-password']">Forgot Password ?</a>
+                                        </div> 
+                                </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--Login div ends--- & sign up div starts-->
+
+                <div class="tab-pane fade show" id="signup" role="tabpanel" aria-labelledby="signuptab">
+                    <h3  class="register-heading">Shedule Your Meetings More Faster !!</h3>
+                    <div class="row register-form ">
+                    <div class="col-md-12 form-group">
+                        <form #signUpForm = "ngForm" (ngSubmit)="verifySignup()">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                         <input 
+                                                type="text" 
+                                                name="firstName" 
+                                                #firstname="ngModel" 
+                                                [(ngModel)]="firstName" 
+                                                class="form-control" 
+                                                placeholder="First Name *" 
+                                                value="" 
+                                                pattern="^[A-za-z ]+$" 
+                                                minlength="2" 
+                                                required 
+                                                autofocus
+                                            />
+
+                                                    <!--Alert When Pattern not matches-->
+                                            <div [hidden]="firstname.pristine || firstname.valid" class="alert alert-danger">
+                                                <div *ngIf="firstname.errors?.pattern">
+                                                ** First name should contain only alphabets !
+                                                <div *ngIf="firstname.errors?.minlength">
+                                                    ** First Name should contain minimum 2 letters!
+                                                </div>
+                                                </div>
+                                                <div *ngIf="firstname.errors?.required">
+                                                ** First Name is required!
+                                                </div>                    
+                                            </div>
+                                            <!--alert ends-->
+                                    </div>
+                                  
+                                    <div class="col-md-6 form-group">
+                                        <input 
+                                                type="text"                                      
+                                                name="lastName" 
+                                                [(ngModel)]="lastName" 
+                                                class="form-control" 
+                                                placeholder="Last Name *" 
+                                                value=""
+                                                pattern="^[A-za-z ]+$"
+                                                #lastname="ngModel"
+                                         />
+
+                                            <!--Alert When Pattern not matches-->
+                                            <div [hidden]="lastname.pristine || lastname.valid" class="alert alert-danger">
+                                                <div *ngIf="lastname.errors?.pattern">
+                                                ** Last name should contain only alphabets !
+                                                </div>                   
+                                            </div>
+                                            <!--alert ends-->
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <input 
+                                                type="email" 
+                                                class="form-control" 
+                                                name="signUpMail" 
+                                                [(ngModel)]="signUpMail" 
+                                                placeholder="Email *" 
+                                                value="" 
+                                                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                                                required
+                                                #emailId ="ngModel"
+
+                                        />
+                                        <!--Alert-->
+                                        <div [hidden]="emailId.valid || emailId.pristine" class="alert alert-danger">
+                                            <div *ngIf="emailId.errors?.pattern">
+                                              ** Email is invalid!
+                            
+                                            </div>
+                                            <div *ngIf="emailId.errors?.required">
+                                              ** Email is required!
+                                            </div>
+                                          </div>
+                                          <!--Alert ends-->
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <input type="text" 
+                                               class="form-control" 
+                                               name="userName" 
+                                               [(ngModel)]="userName" 
+                                               placeholder="UserName *" 
+                                               value="" 
+                                               pattern="^[A-za-z0-9- ]+$"
+                                               minlength="2"
+                                               required
+                                               #user="ngModel"
+                                        />
+                                        <!--alert-->
+                                        <div [hidden]="user.pristine || user.valid" class="alert alert-danger">
+                                            <div *ngIf="user.errors?.pattern">
+                                              ** User name should contain only letters & digits !
+                                              <div *ngIf="user.errors?.minlength">
+                                                ** User Name should contain minimum 2 letters!
+                                              </div>
+                                            </div>
+                                            <div *ngIf="user.errors?.required">
+                                              ** User Name is required!
+                                            </div>
+                                          </div>
+                                          <div *ngIf="isAdmin == 'true' && userName">
+                                            <div *ngIf="validateUserName(userName)" class="alert alert-danger">
+                                              ** Admin user should have '-admin' at the end of User Name
+                                            </div>
+                                          </div>
+                                          <!--alert ends-->
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <input type="password" 
+                                                class="form-control"
+                                                 name="signUpPwd" 
+                                                 [(ngModel)]="signUpPwd" 
+                                                 placeholder="Password *" 
+                                                 value="" 
+                                                 #pass="ngModel"
+                                                 minlength="8"
+                                                 required
+                                        />
+                                        <!--ALERT-->
+                                        <div [hidden]="pass.valid || pass.pristine" class="alert alert-danger">
+                                            <div *ngIf="pass.errors?.minlength">
+                                              ** Password should contain atleast 8 characters!
+                                            </div>
+                                            <div *ngIf="pass.errors?.required">
+                                              ** Password is required!
+                                            </div>
+                                          </div>
+                                        <!--Alert ends-->
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                            <select  name="country" [(ngModel)]="country" class="form-control" id="inputCountry"  (click)="onCountryChange()" >
+                                              <option value="">Country</option>
+                                              <option *ngFor="let country of countries" [value]="country.code">{{country.name}}</option>
+                                            </select>
+                                    </div>
+                                      <div class="col-md-6">
+                                            <div class="input-group">
+                                              <div class="input-group-text">+{{countryCode}}</div>
+                                              <input type="number" id="inputMobile"  pattern="^\d{10}$"class="form-control" name="mobile"  [(ngModel)]="mobile" placeholder="Mobile">
+                                            </div>
+                                        </div>
+                          
+                                    <div class="input-group">
+                                      <div class="checkbox">
+                                        <label> 
+                                          <input id="inputAdmin" 
+                                                [(ngModel)]="isAdmin" 
+                                                (change)="checkValue(isAdmin?'true':'false')" 
+                                                type="checkbox" 
+                                                name="isAdmin" 
+                                                #mobileNum="ngModel"
+                                                 pattern="^\d{10}$"
+                                            > Grant Me Admin's Rights
+                                        </label>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <input type="submit" class="btnRegister"  value="Register"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
