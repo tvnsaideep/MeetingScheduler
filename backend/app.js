@@ -18,7 +18,7 @@ const routesPath = './app/routes';
 
 /**
  * database
-
+*/
  mongoose.connect(appConfig.db.url,{useNewUrlParser:true})
 .then(() => {
   console.log("Connection Established");
@@ -28,13 +28,13 @@ const routesPath = './app/routes';
   //console.error();
   
 });
-*/
+
  
  
 
 /**
  * database connection settings
- */
+ *
 mongoose.connection.on('error', function (err) {
   console.log('database connection error');
   console.log(err)
@@ -58,6 +58,7 @@ mongoose.connection.on('open', function (err) {
   //process.exit(1)
 }); 
 // enr mongoose connection open handler
+*/
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

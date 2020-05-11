@@ -46,7 +46,7 @@ const onListening = () => {
   const addr = server.address();
   const bind = typeof port === "string" ? "pipe " + port : "port " + port;
   debug("Listening on " + bind);
-  let db = mongoose.connect(appConfig.db.uri,{ useMongoClient: true });
+  //let db = mongoose.connect(appConfig.db.uri,{ useMongoClient: true });
 };
 
 //const port = normalizePort(process.env.PORT || "3000");
